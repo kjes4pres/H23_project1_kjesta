@@ -1,6 +1,5 @@
-import scipy as sc
-import numpy as np
 import pytest
+import numpy as np
 
 from exp_decay import ExponentialDecay
 

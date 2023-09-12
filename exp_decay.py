@@ -1,7 +1,9 @@
 import scipy as sc
 import numpy as np
 
-class ExponentialDecay():
+from ode import ODEModel
+
+class ExponentialDecay(ODEModel):
 
     def __init__(self, decay_constant) -> None:
         if decay_constant < 0:
