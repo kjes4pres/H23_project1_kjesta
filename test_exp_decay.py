@@ -26,3 +26,7 @@ def test_rhs():
     message = "Computed derivative differs from the expected value with {diff}."
     assert success, message
 
+def test_negative_decay_raises_ValueError():
+    with pytest.raises(ValueError):
+        model = ExponentialDecay(0.4)
+        model.decay_constant = -1
