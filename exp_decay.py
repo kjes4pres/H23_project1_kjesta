@@ -37,3 +37,8 @@ class ExponentialDecay(ODEModel):
         array, derivative of u at time t.
         '''
         return -self.decay_constant*u
+    
+
+    @property
+    def num_states(self) -> int:
+        return 1

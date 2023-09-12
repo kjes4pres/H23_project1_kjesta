@@ -25,7 +25,23 @@ def test_rhs():
     message = "Computed derivative differs from the expected value with {diff}."
     assert success, message
 
+
 def test_negative_decay_raises_ValueError():
     with pytest.raises(ValueError):
         model = ExponentialDecay(0.4)
         model.decay_constant = -1
+
+
+def test_num_states():
+    tol = 1e-6
+    expected = 1  # wanted number of states for instance of this class
+    model = ExponentialDecay(0.4)
+    computed = model.num_states  # actual number of states for instance of this class
+    diff = abs(computed - expected)
+    success = diff < tol
+    message = "Number of states should be 1 for an instance of ExponentialDecay class, not {computed}."
+    assert success, message
+
+    with pytest.raises(AttributeError):
+        model = ExponentialDecay(0.4)
+        model.num_states = 4
