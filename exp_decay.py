@@ -1,5 +1,6 @@
 import scipy as sc
 import numpy as np
+import matplotlib.pyplot as plt
 
 from ode import ODEModel
 
@@ -42,3 +43,24 @@ class ExponentialDecay(ODEModel):
     @property
     def num_states(self) -> int:
         return 1
+    
+
+if __name__ == "__main__":
+    # instantiating class with parameter = 0.4:
+    model = ExponentialDecay(0.4)
+    t0 = 0
+    T = 10
+    u = np.array([5])
+    timespan = (t0, T)
+    initial_condition = model(0, u)
+
+    n = T/0.01
+    time_points = np.arange(0,11,n)
+
+    result = sc.integrate.solve_ivp(model, timespan, y0 = initial_condition, t_eval = time_points)
+
+    plt.figure()
+    plt.plot(result.t, result.y[0])
+    plt.show()
+
+
