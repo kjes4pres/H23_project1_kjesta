@@ -1,4 +1,4 @@
-import scipy as sc
+from scipy.integrate import solve_ivp
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -48,19 +48,22 @@ class ExponentialDecay(ODEModel):
 if __name__ == "__main__":
     # instantiating class with parameter = 0.4:
     model = ExponentialDecay(0.4)
-    t0 = 0
-    T = 10
-    u = np.array([5])
-    timespan = (t0, T)
-    initial_condition = model(0, u)
+    u = np.array([5])  # just an example
+    initial_condition = np.array([1])  # semi-randomly chosen
+    timespan = (0, 10)
+    t_eval = np.linspace(0, 10, 1000)  
 
-    n = T/0.01
-    time_points = np.arange(0,11,n)
-
-    result = sc.integrate.solve_ivp(model, timespan, y0 = initial_condition, t_eval = time_points)
+    solved = solve_ivp(model, timespan, initial_condition, t_eval = t_eval) 
 
     plt.figure()
-    plt.plot(result.t, result.y[0])
+    plt.title("Solved ODE for exponential decay")
+    plt.plot(solved.t, solved.y[0], label = "$a = 0.4$ \n u_0 = 1")
+    plt.xlabel("time")
+    plt.ylabel("y")
+    plt.legend()
     plt.show()
+
+
+
 
 
