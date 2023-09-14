@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     plt.figure()
     plt.title("Solved ODE for exponential decay")
-    plt.plot(solved.t, solved.y[0], label = "$a = 0.4$ \n u_0 = 1")
+    plt.plot(solved.t, solved.y[0], label = "$a = 0.4$ \n $u_0 = 1$")
     plt.xlabel("time")
     plt.ylabel("y")
     plt.legend()
