@@ -3,6 +3,7 @@ import numpy as np
 
 from exp_decay import ExponentialDecay
 
+
 def test_negative_decay_raises_ValueError_constructor():
     with pytest.raises(ValueError):
         instance = ExponentialDecay(-1)
