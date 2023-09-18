@@ -2,6 +2,8 @@ import numpy as np
 from typing import NamedTuple
 from scipy.integrate import solve_ivp
 import abc
+from typing import Optional, List
+import matplotlib.pyplot as plt
 
 class InvalidInitialConditionError(RuntimeError):
     pass
@@ -43,4 +45,28 @@ class ODEResult(NamedTuple):
     @property
     def num_timepoints(self):
         return self.solution.shape[1]
+    
+
+def plot_ode_solution(
+    results: ODEResult,
+    state_labels: Optional[List[str]] = None,
+    filename: Optional[str] = None,
+) -> None:
+    
+    plt.figure()
+    plt.xlabel("Time")
+    plt.ylabel("ODE solution")
+    plt.grid()
+    if state_labels != None:
+        plt.plot(results.time, results.solution, label = state_labels)
+        plt.legend()
+    else: 
+        plt.plot(results.time, results.solution)
+
+    if filename != None:
+        plt.savefig(filename + ".png")
+    else:
+        plt.show()
+
+
 
