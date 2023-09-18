@@ -23,8 +23,7 @@ class ODEModel(abc.ABC):
     def solve(self, u0: np.ndarray, T: float, dt: float, method: str = "RK45"):
         if len(u0) == self.num_states:
             timespan = (0, T)
-            n = T / dt
-            t_eval = np.arange(0, T + 1, n)
+            t_eval = np.arange(0, T + dt, dt)
             solution = solve_ivp(self, timespan, u0, t_eval=t_eval)
             return self._create_result(solution)
         else:

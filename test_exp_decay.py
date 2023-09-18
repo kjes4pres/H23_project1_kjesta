@@ -54,3 +54,31 @@ def test_solve_with_different_number_of_initial_states():
     u0_wrong = np.array([1, 1])
     with pytest.raises(InvalidInitialConditionError):
         model.solve(u0 = u0_wrong, T = 10, dt = 0.01)
+
+@pytest.mark.parametrize(
+        "a, u0, T, dt", ([0.4, 5, 10, 0.01], [2, 6, 20, 0.1], [5, 3, 50, 0.02])
+)
+def test_solve_time(a, u0, T, dt):
+    u0 = np.array([u0])
+    tol = 1e-6
+    model = ExponentialDecay(a)
+    computed = model.solve(u0, T, dt)
+
+    # Checking that t0 = 0.
+    assert abs(computed.time[0] - 0) < tol ,  f"Start time should be 0, not {computed.time[0]}"
+
+    # Checking that tN = T.
+    assert abs(computed.time[-1] - T) < tol ,  f"End time should be {T}, not {computed.time[-1]}"
+
+    # Checking dt
+    dt_computed = computed.time[1] - computed.time[0]
+    assert abs(dt_computed - dt) < tol ,  f"dt should be {dt}, not {dt_computed}"
+
+
+def test_solve_solution():
+    ...
+
+
+
+
+
