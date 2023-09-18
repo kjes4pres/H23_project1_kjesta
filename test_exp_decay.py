@@ -75,8 +75,23 @@ def test_solve_time(a, u0, T, dt):
     assert abs(dt_computed - dt) < tol ,  f"dt should be {dt}, not {dt_computed}"
 
 
-def test_solve_solution():
-    ...
+@pytest.mark.parametrize(
+        "a, u0, T, dt", ([0.4, 5, 10, 0.01], [2, 6, 20, 0.1], [5, 3, 50, 0.02])
+)
+def test_solve_solution(a, u0, T, dt):
+    tol = 0.01
+    time = np.arange(0, T + dt, dt)
+    exact = u0*np.exp(-a*time)
+
+    u0 = np.array([u0])
+
+    model = ExponentialDecay(a)
+    computed = model.solve(u0, T, dt)
+
+    relative_error = np.linalg.norm(computed.solution[0] - exact) / np.linalg.norm(exact)
+
+    assert relative_error < tol, f"Relative error too large."
+
 
 
 
