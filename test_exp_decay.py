@@ -6,7 +6,7 @@ from ode import ODEModel, ODEResult
 
 def test_negative_decay_raises_ValueError_constructor():
     with pytest.raises(ValueError):
-        instance = ExponentialDecay(-1)
+        model = ExponentialDecay(-1)
 
 
 def test_rhs():
@@ -14,7 +14,7 @@ def test_rhs():
     a = 0.4
     u = np.array([3.2])
     t = 0.0
-    model = ExponentialDecay(0.4)
+    model = ExponentialDecay(a)
     computed = model(t, u)
 
     # Variable expected is what the computed should be close to.

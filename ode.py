@@ -3,7 +3,6 @@ from typing import NamedTuple
 from scipy.integrate import solve_ivp
 import abc
 
-
 class InvalidInitialConditionError(RuntimeError):
     pass
 
@@ -18,18 +17,18 @@ class ODEModel(abc.ABC):
         raise NotImplementedError
 
     def _create_result(self, solution):
-        return ODEResult(time=solution.t, solution=solution.y)
+        return ODEResult(time = solution.t, solution = solution.y)
 
+ 
     def solve(self, u0: np.ndarray, T: float, dt: float, method: str = "RK45"):
-        if len(u0) != self.num_states:
-            raise InvalidInitialConditionError
-        else:
+        if len(u0) == self.num_states:
             timespan = (0, T)
             n = T / dt
             t_eval = np.arange(0, T + 1, n)
             solution = solve_ivp(self, timespan, u0, t_eval=t_eval)
             return self._create_result(solution)
-
+        else:
+            raise InvalidInitialConditionError
 
 class ODEResult(NamedTuple):
     time: np.ndarray
