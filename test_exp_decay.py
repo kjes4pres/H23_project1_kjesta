@@ -2,7 +2,8 @@ import pytest
 import numpy as np
 
 from exp_decay import ExponentialDecay
-from ode import ODEModel, ODEResult
+from ode import ODEModel, ODEResult, InvalidInitialConditionError
+
 
 def test_negative_decay_raises_ValueError_constructor():
     with pytest.raises(ValueError):
@@ -47,9 +48,6 @@ def test_num_states():
         model = ExponentialDecay(0.4)
         model.num_states = 4
 
-
-class InvalidInitialConditionError(RuntimeError):
-    pass
 
 def test_solve_with_different_number_of_initial_states():
     model = ExponentialDecay(0.4)
