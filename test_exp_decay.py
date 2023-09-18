@@ -1,8 +1,9 @@
 import pytest
 import numpy as np
+from pathlib import Path
 
 from exp_decay import ExponentialDecay
-from ode import ODEModel, ODEResult, InvalidInitialConditionError
+from ode import *
 
 
 def test_negative_decay_raises_ValueError_constructor():
@@ -104,6 +105,19 @@ def test_ODEResults():
 
     assert computed_states == expected_states, f"Got {computed_states}, wanted {expected_states}"
     assert computed.num_timepoints == expected_time , f"Got {computed_timepoints}, wanted {expected_time}"
+
+
+def test_plot_ode_solution_saves_file():
+    filename = Path("test_plot.png")
+    if filename.is_file():
+        filename.unlink()
+
+    model = ExponentialDecay(0.8)
+    result = model.solve(u0 = np.array([5]), T = 10, dt = 0.01)
+    plot_ode_solution(results = result, state_labels = ["u"], filename="test_plot.png")
+
+    assert filename.is_file()
+    filename.unlink()
 
 
 

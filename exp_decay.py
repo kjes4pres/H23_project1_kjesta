@@ -63,5 +63,5 @@ if __name__ == "__main__":
     
     # model = ExponentialDecay(0.4)
     # result = model.solve(u0=np.array([4.0]), T=10.0, dt=0.01)
-    # plot_ode_solution(results = result, state_labels = ["u"])
+    # plot_ode_solution(results = result, state_labels = ["u"], filename="exponential_decay")
 
