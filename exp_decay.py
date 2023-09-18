@@ -2,7 +2,7 @@ from scipy.integrate import solve_ivp
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ode import ODEModel
+from ode import *
 
 
 class ExponentialDecay(ODEModel):
@@ -60,4 +60,8 @@ if __name__ == "__main__":
     plt.ylabel("y")
     plt.legend()
     plt.show()
+    
+    # model = ExponentialDecay(0.4)
+    # result = model.solve(u0=np.array([4.0]), T=10.0, dt=0.01)
+    # plot_ode_solution(results = result, state_labels = ["u"])
 

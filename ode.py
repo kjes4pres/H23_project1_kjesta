@@ -45,7 +45,7 @@ class ODEResult(NamedTuple):
     @property
     def num_timepoints(self):
         return self.solution.shape[1]
-    
+
 
 def plot_ode_solution(
     results: ODEResult,
@@ -57,13 +57,13 @@ def plot_ode_solution(
     plt.xlabel("Time")
     plt.ylabel("ODE solution")
     plt.grid()
-    if state_labels != None:
-        plt.plot(results.time, results.solution, label = state_labels)
+    if state_labels:
+        plt.plot(results.time, results.solution[0], label=state_labels)
         plt.legend()
-    else: 
+    else:
         plt.plot(results.time, results.solution)
 
-    if filename != None:
+    if filename:
         plt.savefig(filename + ".png")
     else:
         plt.show()
