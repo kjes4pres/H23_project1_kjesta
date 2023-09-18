@@ -51,7 +51,7 @@ if __name__ == "__main__":
     timespan = (0, 10)
     t_eval = np.linspace(0, 10, 1000)
 
-    solved = solve_ivp(model, timespan, initial_condition, t_eval = t_eval)
+    solved = solve_ivp(model, timespan, initial_condition, t_eval=t_eval)
 
     plt.figure()
     plt.title("Solved ODE for exponential decay")
@@ -60,8 +60,7 @@ if __name__ == "__main__":
     plt.ylabel("y")
     plt.legend()
     plt.show()
-    
+
     # model = ExponentialDecay(0.4)
     # result = model.solve(u0=np.array([4.0]), T=10.0, dt=0.01)
     # plot_ode_solution(results = result, state_labels = ["u"], filename="exponential_decay")
-

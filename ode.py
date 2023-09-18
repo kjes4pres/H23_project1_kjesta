@@ -5,6 +5,7 @@ import abc
 from typing import Optional, List
 import matplotlib.pyplot as plt
 
+
 class InvalidInitialConditionError(RuntimeError):
     pass
 
@@ -19,9 +20,8 @@ class ODEModel(abc.ABC):
         raise NotImplementedError
 
     def _create_result(self, solution):
-        return ODEResult(time = solution.t, solution = solution.y)
+        return ODEResult(time=solution.t, solution=solution.y)
 
- 
     def solve(self, u0: np.ndarray, T: float, dt: float, method: str = "RK45"):
         if len(u0) == self.num_states:
             timespan = (0, T)
@@ -30,17 +30,15 @@ class ODEModel(abc.ABC):
             return self._create_result(solution)
         else:
             raise InvalidInitialConditionError
-        
+
 
 class ODEResult(NamedTuple):
     time: np.ndarray
     solution: np.ndarray
 
-
     @property
     def num_states(self):
         return self.solution.shape[0]
-
 
     @property
     def num_timepoints(self):
@@ -52,7 +50,16 @@ def plot_ode_solution(
     state_labels: Optional[List[str]] = None,
     filename: Optional[str] = None,
 ) -> None:
-    
+    '''
+    Makes plot of solution to an ODE. 
+
+    Args.:
+    results: instance of the ODEResult NamedTuple, contains two numpy arrays.
+    state_labels: Optional list of the state variables names.
+    filename: optional, should be given if you want to save the figure.
+
+    Return: None, only matplotlib pyplot. 
+    '''
     plt.figure()
     plt.xlabel("Time")
     plt.ylabel("ODE solution")
@@ -67,6 +74,3 @@ def plot_ode_solution(
         plt.savefig(filename)
     else:
         plt.show()
-
-
-
