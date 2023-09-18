@@ -64,7 +64,7 @@ def plot_ode_solution(
         plt.plot(results.time, results.solution)
 
     if filename:
-        plt.savefig(filename + ".png")
+        plt.savefig(filename)
     else:
         plt.show()
 
