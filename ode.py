@@ -28,7 +28,19 @@ class ODEModel(abc.ABC):
             return self._create_result(solution)
         else:
             raise InvalidInitialConditionError
+        
 
 class ODEResult(NamedTuple):
     time: np.ndarray
     solution: np.ndarray
+
+
+    @property
+    def num_states(self):
+        return self.solution.shape[0]
+
+
+    @property
+    def num_timepoints(self):
+        return self.solution.shape[1]
+

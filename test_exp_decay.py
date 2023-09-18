@@ -93,7 +93,17 @@ def test_solve_solution(a, u0, T, dt):
     assert relative_error < tol, f"Relative error too large."
 
 
+def test_ODEResults():
+    computed = ODEResult(time=np.array([0, 1, 2]), solution=np.zeros((2, 3)))
 
+    expected_states = 2
+    expected_time = 3
+
+    computed_states = computed.num_states
+    computed_timepoints = computed.num_timepoints
+
+    assert computed_states == expected_states, f"Got {computed_states}, wanted {expected_states}"
+    assert computed.num_timepoints == expected_time , f"Got {computed_timepoints}, wanted {expected_time}"
 
 
 
