@@ -1,15 +1,17 @@
 import numpy as np
 from typing import NamedTuple
 from scipy.integrate import solve_ivp
+import abc
 
 
 class InvalidInitialConditionError(RuntimeError):
     pass
 
 
-class ODEModel:
+class ODEModel(abc.ABC):
+    @abc.abstractmethod
     def __call__(self, t: float, u: np.ndarray) -> np.ndarray:
-        raise NotImplementedError
+        pass
 
     @property
     def num_states(self) -> int:
