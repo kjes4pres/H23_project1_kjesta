@@ -18,6 +18,16 @@ class PendulumResults:
     @property
     def omega(self) -> np.ndarray:
         return self.solution[1] 
+    
+    @property
+    def x(self) -> np.ndarray:
+        x = self.L*np.sin(self.theta)
+        return x
+    
+    @property
+    def y(self) -> np.ndarray:
+        y = -self.L*np.cos(self.theta)
+        return y 
         
 
 class Pendulum(ODEModel):
