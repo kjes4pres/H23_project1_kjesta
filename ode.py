@@ -65,10 +65,12 @@ def plot_ode_solution(
     plt.ylabel("ODE solution")
     plt.grid()
     if state_labels:
-        plt.plot(results.time, results.solution[0], label=state_labels)
+        for i in range(len(state_labels)):
+            plt.plot(results.time, results.solution[i], label = state_labels[i])
         plt.legend()
     else:
-        plt.plot(results.time, results.solution[0])
+        for i in range(len(results.solution)):
+            plt.plot(results.time, results.solution[i])
 
     if filename:
         plt.savefig(filename)
