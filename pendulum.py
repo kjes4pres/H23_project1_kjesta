@@ -1,7 +1,24 @@
 import numpy as np
+from dataclasses import dataclass
 
 from ode import *
 
+
+@dataclass
+class PendulumResults:
+    time: np.ndarray
+    solution: np.ndarray
+    L: float
+    g: float
+
+    @property
+    def theta(self) -> np.ndarray:
+        return self.solution[0]
+
+    @property
+    def omega(self) -> np.ndarray:
+        return self.solution[1] 
+        
 
 class Pendulum(ODEModel):
     def __init__(self, M = 1, L=1, g=9.81) -> None:
@@ -33,6 +50,10 @@ class Pendulum(ODEModel):
         return du_dt
     
 
+    def _create_result(self, solution) -> PendulumResults:
+        return PendulumResults(solution.t, solution.y, self.L, self.g)
+    
+
 def exercise_2b():
     '''
     Making an instance of the class Pendulum,
@@ -45,6 +66,7 @@ def exercise_2b():
 
     result = model.solve(u0, T, dt)
     plot_ode_solution(results = result, state_labels = ["theta", "omega"], filename = "exercise_2b.png")
+
 
 
 if __name__ == "__main__":
