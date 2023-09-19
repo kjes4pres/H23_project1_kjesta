@@ -109,6 +109,43 @@ def exercise_2b():
     plot_ode_solution(results = result, state_labels = ["theta", "omega"], filename = "exercise_2b.png")
 
 
+def plot_energy(results: PendulumResults, filename: Optional[str] = None) -> None:
+    '''
+    Function that plots kinetic, potential and total energy of a pendulum.
 
+    Args:
+    results: object of PendulumResults
+    filename: optional filename for saving plot as file.
+    '''
+
+    plt.figure()
+    plt.xlabel("Time")
+    plt.ylabel("Energy")
+    plt.grid()
+
+    plt.plot(results.time, results.potential_energy, label = "Potential energy")
+    plt.plot(results.time, results.kinetic_energy, label = "Kinetic energy")
+    plt.plot(results.time, results.total_energy, label = "Total energy")
+    plt.legend()
+
+    if filename:
+        plt.savefig(filename)
+    else:
+        plt.show()
+
+
+def exercise_2g():
+    '''
+    Solving the model, and plotting energies.
+    '''
+    u0 = np.array([np.pi/6, 0.35])
+    T = 10
+    dt = 0.01
+
+    model = Pendulum()
+    solved_model= model.solve(u0, T, dt)
+    plot_energy(solved_model, filename = "energy_single.png")
+ 
 if __name__ == "__main__":
-    exercise_2b()
+    # exercise_2b()
+    exercise_2g()
