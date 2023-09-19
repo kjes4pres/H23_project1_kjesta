@@ -28,6 +28,13 @@ class PendulumResults:
     def y(self) -> np.ndarray:
         y = -self.L*np.cos(self.theta)
         return y 
+    
+
+    @property
+    def potential_energy(self) -> np.ndarray:
+        P = self.g*(self.y + self.L)
+        return P
+
         
 
 class Pendulum(ODEModel):
