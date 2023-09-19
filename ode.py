@@ -68,7 +68,7 @@ def plot_ode_solution(
         plt.plot(results.time, results.solution[0], label=state_labels)
         plt.legend()
     else:
-        plt.plot(results.time, results.solution)
+        plt.plot(results.time, results.solution[0])
 
     if filename:
         plt.savefig(filename)
