@@ -13,7 +13,7 @@ class Pendulum(ODEModel):
     def num_states(self) -> int:
         return 2
 
-    def __call__(self, u: np.ndarray) -> np.ndarray:
+    def __call__(self, t: float, u: np.ndarray) -> np.ndarray:
         """
         Finds time derivative of position and angular velocity of pendulum.
 
@@ -44,7 +44,7 @@ def exercise_2b():
     dt = 0.01
 
     result = model.solve(u0, T, dt)
-    result.plot_ode_results(result, state_labels = ["$\\theta$", "$\\omega$"], filename = "exercise_2b.png")
+    plot_ode_solution(results = result, state_labels = ["theta", "omega"], filename = "exercise_2b.png")
 
 
 if __name__ == "__main__":
