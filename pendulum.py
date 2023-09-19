@@ -34,8 +34,32 @@ class PendulumResults:
     def potential_energy(self) -> np.ndarray:
         P = self.g*(self.y + self.L)
         return P
+    
+    @property
+    def velocity_x(self) -> np.ndarray:
+        vx = np.gradient(self.x, self.time)
+        return vx
+    
+    @property
+    def velocity_y(self) -> np.ndarray:
+        vy = np.gradient(self.y, self.time)
+        return vy
+    
 
-        
+    @property
+    def kinetic_energy(self) -> np.ndarray:
+        vx = self.velocity_x
+        vy = self.velocity_y
+        K = (1/2)*(vx*vx + vy*vy)
+        return K
+    
+
+    @property
+    def total_energy(self) -> np.ndarray:
+        T = self.potential_energy + self.kinetic_energy
+        return T
+
+
 
 class Pendulum(ODEModel):
     def __init__(self, M = 1, L=1, g=9.81) -> None:
