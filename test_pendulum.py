@@ -46,3 +46,26 @@ def test_solve_pendulum_ode_with_zero_ic():
     msg  = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
     assert np.all(comp_solution_theta == 0), msg
     assert np.all(comp_solution_omega == 0), msg
+
+def test_solve_pendulum_function_zero_ic():
+    u0 = np.array([0, 0])
+    T = 10
+    dt = 0.01
+
+    model = Pendulum()
+    computed = model.solve(u0, T, dt)
+
+    comp_theta = computed.theta
+    comp_omega = computed.omega
+    comp_x = computed.x
+    comp_y = computed.y
+
+    assert np.all(comp_theta == 0), f"initial condition (0,0) should give theta only containing zeros."
+    assert np.all(comp_omega == 0), f"initial condition (0,0) should give omega only containing zeros."
+    assert np.all(comp_x == 0), f"initial condition (0,0) should give x only containing zeros."
+    assert np.all(comp_y == -model.L), f"initial condition (0,0) should give y only containing -L."
+
+
+
+
+
