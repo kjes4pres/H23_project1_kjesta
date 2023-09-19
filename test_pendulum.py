@@ -46,8 +46,3 @@ def test_solve_pendulum_ode_with_zero_ic():
     msg  = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
     assert np.all(comp_solution_theta == 0), msg
     assert np.all(comp_solution_omega == 0), msg
-
-
-
-
-
