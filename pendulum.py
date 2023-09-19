@@ -2,6 +2,7 @@ import numpy as np
 from dataclasses import dataclass
 
 from ode import *
+from ode import np
 
 
 @dataclass
@@ -145,6 +146,33 @@ def exercise_2g():
     model = Pendulum()
     solved_model= model.solve(u0, T, dt)
     plot_energy(solved_model, filename = "energy_single.png")
+
+
+class DampenedPendulum(Pendulum):
+    def __init__(self, B: float, M=1, L=1, g=9.81) -> None:
+        super().__init__(M, L, g)
+        self.B = B
+
+    def __call__(self, t: float, u: np.ndarray) -> np.ndarray:
+        """
+        Finds time derivative of position and angular velocity of pendulum.
+
+        Input:
+        u: numpy array, first index as theta (position), second index as omega (angular velocity)
+
+        Returns:
+        du_dt: time derivative of u.
+        """
+        theta_dt = super().__call__(t, u)[0]
+
+        omega = u[1]
+        omega_dt = -(self.g / self.L) * np.sin(self.theta) - self.B*omega
+
+        du_dt = np.array([theta_dt, omega_dt])
+        return du_dt
+
+
+
  
 if __name__ == "__main__":
     # exercise_2b()
