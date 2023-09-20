@@ -11,7 +11,7 @@ def test_rhs():
     u = np.array([np.pi / 6, 0.35])
     du_dt_expected = np.array([0.35, -3.45])
     model = Pendulum(M=1, L=1.42)
-    du_dt_computed = model(t,u)
+    du_dt_computed = model(t, u)
 
     for i, (comp, exp) in enumerate(zip(du_dt_computed, du_dt_expected)):
         diff = abs(comp - exp)
@@ -25,7 +25,7 @@ def test_pendulum_at_equilibrium_stays_at_rest():
     u = np.array([0, 0])
     du_dt_expected = u
     model = Pendulum(M=1)
-    du_dt_computed = model(t,u)
+    du_dt_computed = model(t, u)
 
     for i, (comp, exp) in enumerate(zip(du_dt_computed, du_dt_expected)):
         success = comp == exp
@@ -43,9 +43,10 @@ def test_solve_pendulum_ode_with_zero_ic():
 
     comp_solution_theta = computed.solution[0]
     comp_solution_omega = computed.solution[1]
-    msg  = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
+    msg = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
     assert np.all(comp_solution_theta == 0), msg
     assert np.all(comp_solution_omega == 0), msg
+
 
 def test_solve_pendulum_function_zero_ic():
     u0 = np.array([0, 0])
@@ -60,12 +61,15 @@ def test_solve_pendulum_function_zero_ic():
     comp_x = computed.x
     comp_y = computed.y
 
-    assert np.all(comp_theta == 0), f"initial condition (0,0) should give theta only containing zeros."
-    assert np.all(comp_omega == 0), f"initial condition (0,0) should give omega only containing zeros."
-    assert np.all(comp_x == 0), f"initial condition (0,0) should give x only containing zeros."
-    assert np.all(comp_y == -model.L), f"initial condition (0,0) should give y only containing -L."
-
-
-
-
-
+    assert np.all(
+        comp_theta == 0
+    ), f"initial condition (0,0) should give theta only containing zeros."
+    assert np.all(
+        comp_omega == 0
+    ), f"initial condition (0,0) should give omega only containing zeros."
+    assert np.all(
+        comp_x == 0
+    ), f"initial condition (0,0) should give x only containing zeros."
+    assert np.all(
+        comp_y == -model.L
+    ), f"initial condition (0,0) should give y only containing -L."
