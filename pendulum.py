@@ -16,42 +16,39 @@ class PendulumResults:
 
     @property
     def omega(self) -> np.ndarray:
-        return self.solution[1] 
-    
+        return self.solution[1]
+
     @property
     def x(self) -> np.ndarray:
-        x = self.L*np.sin(self.theta)
+        x = self.L * np.sin(self.theta)
         return x
-    
+
     @property
     def y(self) -> np.ndarray:
-        y = -self.L*np.cos(self.theta)
-        return y 
-    
+        y = -self.L * np.cos(self.theta)
+        return y
 
     @property
     def potential_energy(self) -> np.ndarray:
-        P = self.g*(self.y + self.L)
+        P = self.g * (self.y + self.L)
         return P
-    
+
     @property
     def velocity_x(self) -> np.ndarray:
         vx = np.gradient(self.x, self.time)
         return vx
-    
+
     @property
     def velocity_y(self) -> np.ndarray:
         vy = np.gradient(self.y, self.time)
         return vy
-    
 
     @property
     def kinetic_energy(self) -> np.ndarray:
         vx = self.velocity_x
         vy = self.velocity_y
-        K = (1/2)*(vx*vx + vy*vy)
+        K = (1 / 2) * (vx * vx + vy * vy)
         return K
-    
 
     @property
     def total_energy(self) -> np.ndarray:
@@ -59,9 +56,8 @@ class PendulumResults:
         return T
 
 
-
 class Pendulum(ODEModel):
-    def __init__(self, M = 1, L=1, g=9.81) -> None:
+    def __init__(self, M=1, L=1, g=9.81) -> None:
         self.g = g  # gravity [m^2/s]
         self.L = L  # length of rod [m]
         self.M = M  # mass of pendulum [kg]
@@ -88,43 +84,44 @@ class Pendulum(ODEModel):
 
         du_dt = np.array([theta_dt, omega_dt])
         return du_dt
-    
 
     def _create_result(self, solution) -> PendulumResults:
         return PendulumResults(solution.t, solution.y, self.L, self.g)
-    
+
 
 def exercise_2b():
-    '''
+    """
     Making an instance of the class Pendulum,
-    and solving the ODE. 
-    '''
-    model = Pendulum(M = 1)
-    u0 = np.array([np.pi/6, 0.35])
+    and solving the ODE.
+    """
+    model = Pendulum(M=1)
+    u0 = np.array([np.pi / 6, 0.35])
     T = 10.0
     dt = 0.01
 
     result = model.solve(u0, T, dt)
-    plot_ode_solution(results = result, state_labels = ["theta", "omega"], filename = "exercise_2b.png")
+    plot_ode_solution(
+        results=result, state_labels=["theta", "omega"], filename="exercise_2b.png"
+    )
 
 
 def plot_energy(results: PendulumResults, filename: Optional[str] = None) -> None:
-    '''
+    """
     Function that plots kinetic, potential and total energy of a pendulum.
 
     Args:
     results: object of PendulumResults
     filename: optional filename for saving plot as file.
-    '''
+    """
 
     plt.figure()
     plt.xlabel("Time")
     plt.ylabel("Energy")
     plt.grid()
 
-    plt.plot(results.time, results.potential_energy, label = "Potential energy")
-    plt.plot(results.time, results.kinetic_energy, label = "Kinetic energy")
-    plt.plot(results.time, results.total_energy, label = "Total energy")
+    plt.plot(results.time, results.potential_energy, label="Potential energy")
+    plt.plot(results.time, results.kinetic_energy, label="Kinetic energy")
+    plt.plot(results.time, results.total_energy, label="Total energy")
     plt.legend()
 
     if filename:
@@ -134,16 +131,16 @@ def plot_energy(results: PendulumResults, filename: Optional[str] = None) -> Non
 
 
 def exercise_2g():
-    '''
+    """
     Solving the pendulum model, and plotting energies.
-    '''
-    u0 = np.array([np.pi/6, 0.35])
+    """
+    u0 = np.array([np.pi / 6, 0.35])
     T = 10
     dt = 0.01
 
     model = Pendulum()
-    solved_model= model.solve(u0, T, dt)
-    plot_energy(solved_model, filename = "energy_single.png")
+    solved_model = model.solve(u0, T, dt)
+    plot_energy(solved_model, filename="energy_single.png")
 
 
 class DampenedPendulum(Pendulum):
@@ -165,26 +162,25 @@ class DampenedPendulum(Pendulum):
 
         theta = u[0]
         omega = u[1]
-        omega_dt = -(self.g / self.L) * np.sin(theta) - self.B*omega
+        omega_dt = -(self.g / self.L) * np.sin(theta) - self.B * omega
 
         du_dt = np.array([theta_dt, omega_dt])
         return du_dt
 
 
 def exercise_2h():
-    '''
+    """
     Solving the dampened pendulum model and plotting energies.
-    '''
-    u0 = np.array([np.pi/6, 0.35])
+    """
+    u0 = np.array([np.pi / 6, 0.35])
     T = 10
     dt = 0.01
 
-    model = DampenedPendulum(B = 1)
-    solved_model= model.solve(u0, T, dt)
-    plot_energy(solved_model, filename = "energy_dampened.png")
+    model = DampenedPendulum(B=1)
+    solved_model = model.solve(u0, T, dt)
+    plot_energy(solved_model, filename="energy_dampened.png")
 
 
- 
 if __name__ == "__main__":
     # exercise_2b()
     # exercise_2g()
