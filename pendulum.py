@@ -165,15 +165,26 @@ class DampenedPendulum(Pendulum):
         """
         theta_dt = super().__call__(t, u)[0]
 
+        theta = u[0]
         omega = u[1]
-        omega_dt = -(self.g / self.L) * np.sin(self.theta) - self.B*omega
+        omega_dt = -(self.g / self.L) * np.sin(theta) - self.B*omega
 
         du_dt = np.array([theta_dt, omega_dt])
         return du_dt
 
 
+def exercise_2h():
+    u0 = np.array([np.pi/6, 0.35])
+    T = 10
+    dt = 0.01
+
+    model = DampenedPendulum(B = 1)
+    solved_model= model.solve(u0, T, dt)
+    plot_energy(solved_model, filename = "energy_dampened.png")
+
 
  
 if __name__ == "__main__":
     # exercise_2b()
-    exercise_2g()
+    # exercise_2g()
+    exercise_2h()
