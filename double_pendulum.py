@@ -86,3 +86,61 @@ class DoublePendulumResults:
         return self.y1 - self.L2*np.cos(self.theta2)
     
     
+    @property
+    def potential_energy(self) -> np.ndarray:
+        P1 = self.g*(self.y1 + self.L1)
+        P2 = self.g*(self.y2 + self.L1 + self.L2)
+        return P1 + P2
+    
+    @property
+    def velocity_x1(self) -> np.ndarray:
+        vx1 = np.gradient(self.x1, self.time)
+        return vx1
+    
+    @property
+    def velocity_x2(self) -> np.ndarray:
+        vx2 = np.gradient(self.x2, self.time)
+        return vx2
+    
+    
+    @property
+    def velocity_y1(self) -> np.ndarray:
+        vy1 = np.gradient(self.y1, self.time)
+        return vy1
+    
+    @property
+    def velocity_y2(self) -> np.ndarray:
+        vy2 = np.gradient(self.y2, self.time)
+        return vy2
+    
+
+    @property
+    def kinetic_energy(self) -> np.ndarray:
+        vx1 = self.velocity_x1
+        vx2 = self.velocity_x2
+        vy1 = self.velocity_y1
+        vy2 = self.velocity_y2
+
+        K1 = (1/2)*(vx1*vx1 + vy1*vy1)
+        K2 =(1/2)*(vx2*vx2 + vy2*vy2)
+        return K1 + K2
+    
+
+    @property
+    def total_energy(self) -> np.ndarray:
+        T = self.potential_energy + self.kinetic_energy
+        return T
+    
+
+def exercise_3d():
+    u0 = np.array([np.pi/6, 0.35, 0, 0])
+    T = 10.0
+    dt = 0.01
+    model = DoublePendulum()
+    solved_model = model.solve(u0, T, dt, method="Radau")
+    plot_energy(solved_model, filename = "energy_double.png")
+
+    
+    
+if __name__ == "__main__":
+    exercise_3d()
