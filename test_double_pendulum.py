@@ -65,3 +65,22 @@ def test_solve_pendulum_ode_with_zero_ic():
     msg  = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
     assert np.all(comp_solution_theta == 0), msg
     assert np.all(comp_solution_omega == 0), msg
+
+
+def test_solve_double_pendulum_function_zero_ic():
+    u0 = np.array([0, 0, 0, 0])
+    T = 10
+    dt = 0.01
+
+    model = DoublePendulum()
+    solved_model = model.solve(u0, T, dt)
+
+    properties = ['theta1', 'theta2', 'omega1', 'omega2', 'x1', 'x2', 'y1', 'y2']
+    expected = [0, 0, 0, 0, 0, 0, -model.L1, -(model.L1 + model.L2)]
+
+    for property, expected in zip(properties, expected):
+        computed = getattr(solved_model, property)
+        msg = f"The initial condition {u0} should give {property} with values of {expected}, not {computed}."
+        assert np.all(computed == expected), msg
+
+    
