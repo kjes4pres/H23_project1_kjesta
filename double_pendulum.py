@@ -28,8 +28,8 @@ class DoublePendulum(ODEModel):
             - (2 * self.g * np.sin(theta2))
         )
 
-        denominator1 = 2 * self.L1 - self.L1 * (np.cos(dtheta) * np.cos(dtheta))
-        denominator2 = 2 * self.L2 - self.L2 * (np.cos(dtheta) * np.cos(dtheta))
+        denominator1 = (2 * self.L1) - (self.L1 * (np.cos(dtheta) * np.cos(dtheta)))
+        denominator2 = (2 * self.L2) - (self.L2 * (np.cos(dtheta) * np.cos(dtheta)))
 
         domega1_dt = numerator1 / denominator1
         domega2_dt = numerator2 / denominator2
@@ -137,10 +137,9 @@ def exercise_3d():
     T = 10.0
     dt = 0.01
     model = DoublePendulum()
-    solved_model = model.solve(u0, T, dt, method="Radau")
+    solved_model = model.solve(u0, T, dt, method = "Radau")
     plot_energy(solved_model, filename = "energy_double.png")
 
-    
     
 if __name__ == "__main__":
     exercise_3d()
