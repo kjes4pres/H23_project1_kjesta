@@ -9,8 +9,7 @@ class ExponentialDecay(ODEModel):
     def __init__(self, decay_constant) -> None:
         if decay_constant < 0:
             raise ValueError("The decay constant cannot be negative.")
-        else:
-            self._decay_constant = decay_constant
+        self._decay_constant = decay_constant
 
     @property
     def decay_constant(self):
@@ -22,8 +21,8 @@ class ExponentialDecay(ODEModel):
             raise ValueError(
                 f"The decay constant must be non-negative, not {new_decay_constant}!"
             )
-        else:
-            self._decay_constant = new_decay_constant
+
+        self._decay_constant = new_decay_constant
 
     def __call__(self, t: float, u: np.ndarray) -> np.ndarray:
         """
