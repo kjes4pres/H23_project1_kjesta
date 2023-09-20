@@ -137,7 +137,7 @@ def plot_energy(results: PendulumResults, filename: Optional[str] = None) -> Non
 
 def exercise_2g():
     '''
-    Solving the model, and plotting energies.
+    Solving the pendulum model, and plotting energies.
     '''
     u0 = np.array([np.pi/6, 0.35])
     T = 10
@@ -174,6 +174,9 @@ class DampenedPendulum(Pendulum):
 
 
 def exercise_2h():
+    '''
+    Solving the dampened pendulum model and plotting energies.
+    '''
     u0 = np.array([np.pi/6, 0.35])
     T = 10
     dt = 0.01
