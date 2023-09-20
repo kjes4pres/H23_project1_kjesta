@@ -1,6 +1,3 @@
-import numpy as np
-from dataclasses import dataclass
-
 from pendulum import *
 
 
@@ -42,3 +39,50 @@ class DoublePendulum(ODEModel):
     @property
     def num_states(self) -> int:
         return 4
+    
+
+    def _create_result(self, solution):
+        return DoublePendulumResults(solution.t, solution.y, self.L1, self.L2, self.g)
+
+@dataclass
+class DoublePendulumResults:
+    time: np.ndarray
+    solution: np.ndarray
+    L1: float
+    L2: float
+    g: float
+
+    @property
+    def theta1(self) -> np.ndarray:
+        return self.solution[0]
+    
+    @property
+    def omega1(self) -> np.ndarray:
+        return self.solution[1]
+    
+    @property
+    def theta2(self) -> np.ndarray:
+        return self.solution[2]
+    
+    @property
+    def omega2(self) -> np.ndarray:
+        return self.solution[3]
+    
+
+    @property
+    def x1(self) -> np.ndarray:
+        return self.L1*np.sin(self.theta1)
+    
+    @property
+    def y1(self) -> np.ndarray:
+        return -self.L1*np.cos(self.theta1)
+    
+    @property
+    def x2(self) -> np.ndarray:
+        return self.x1 + self.L2*np.sin(self.theta2)
+    
+    @property
+    def y2(self) -> np.ndarray:
+        return self.y1 - self.L2*np.cos(self.theta2)
+    
+    
