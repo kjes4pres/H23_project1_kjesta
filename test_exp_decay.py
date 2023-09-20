@@ -98,7 +98,7 @@ def test_solve_solution(a, u0, T, dt):
         exact
     )
 
-    assert relative_error < tol, f"Relative error too large."
+    assert relative_error < tol, "Relative error too large."
 
 
 def test_ODEResults():
