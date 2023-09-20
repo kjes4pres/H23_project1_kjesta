@@ -3,6 +3,7 @@ import pytest
 
 from double_pendulum import *
 
+
 @pytest.mark.parametrize(
     "theta1, theta2, expected",
     [
@@ -44,11 +45,11 @@ def test_derivatives_at_rest_is_zero():
     u = np.array([0, 0, 0, 0])
     du_dt_expected = u
     model = DoublePendulum()
-    du_dt_computed = model(t,u)
+    du_dt_computed = model(t, u)
 
-    for i, (comp, exp) in enumerate(zip(du_dt_computed, du_dt_expected)):
-        success = comp == exp
-        msg = f"Computed derivative, {comp}, does not match the analytical, {exp}."
+    for (computed, expected) in zip(du_dt_computed, du_dt_expected):
+        success = computed == expected
+        msg = f"Computed derivative, {computed}, does not match the analytical, {expected}."
         assert success, msg
 
 
@@ -62,7 +63,7 @@ def test_solve_pendulum_ode_with_zero_ic():
 
     comp_solution_theta = computed.solution[0]
     comp_solution_omega = computed.solution[1]
-    msg  = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
+    msg = f"For the inital condition {u0}, the solved ODEs should also be only zeros."
     assert np.all(comp_solution_theta == 0), msg
     assert np.all(comp_solution_omega == 0), msg
 
@@ -75,12 +76,10 @@ def test_solve_double_pendulum_function_zero_ic():
     model = DoublePendulum()
     solved_model = model.solve(u0, T, dt)
 
-    properties = ['theta1', 'theta2', 'omega1', 'omega2', 'x1', 'x2', 'y1', 'y2']
+    properties = ["theta1", "theta2", "omega1", "omega2", "x1", "x2", "y1", "y2"]
     expected = [0, 0, 0, 0, 0, 0, -model.L1, -(model.L1 + model.L2)]
 
     for property, expected in zip(properties, expected):
         computed = getattr(solved_model, property)
         msg = f"The initial condition {u0} should give {property} with values of {expected}, not {computed}."
         assert np.all(computed == expected), msg
-
-    
