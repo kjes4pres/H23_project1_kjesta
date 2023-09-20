@@ -2,7 +2,6 @@ import numpy as np
 from dataclasses import dataclass
 
 from ode import *
-from ode import np
 
 
 @dataclass
